@@ -56,29 +56,16 @@ Brazilian fiscal document domain context for developers without prior knowledge.
 
 ## invoice-processors Specifications
 
-Each branch needs its own spec when implementation begins. Known findings per branch:
+~~Each branch needs its own spec when implementation begins.~~ **Done.** Specs created in `05-invoice-processors/`.
 
-### `05-invoice-processors/05.1-xml-processor.md`
-- lxml security flags: `resolve_entities=False`, `no_network=True`, `huge_tree=False`, `load_dtd=False` (C-10)
-- XSD schema version(s) to validate against
-- XPath field mapping (which paths map to which output fields)
-- Terminal failure conditions (XSD invalid → immediate failed, no retry)
+- `05-invoice-processors/05.0-overview.md` — package contract, branch summary, dependency direction
+- `05-invoice-processors/05.1-xml-processor.md` — lxml security flags, XSD validation, XPath mapping, terminal failures
+- `05-invoice-processors/05.2-pdf-processor.md` — dual-library approach, confidence threshold, cell extraction, table normalization gap
+- `05-invoice-processors/05.3-image-processor.md` — Pillow preprocessing, Gemini structured output, response validation, extractor interface
 
-### `05-invoice-processors/05.2-pdf-processor.md`
-- Confidence threshold definition: metric, value, calibration method (H-02)
-- Per-page vs whole-document scope for the threshold check
-- Scanned PDF double-processing prevention (H-07): state tracking when routing to image branch
-- pdfplumber context manager requirement (H-16)
-- pdf2image disk output requirement — `output_folder` to tmpfs (H-17)
+### Remaining gap: PDF table normalization
 
-### `05-invoice-processors/05.3-image-processor.md`
-- Resize strategy: target dimensions, encoding format, quality level, hard cap vs target (L-01)
-- Contrast enhancement algorithm and parameters (thermal paper profile)
-- Gemini structured output mode — do not interpolate document content into prompt (H-10)
-- Gemini response Pydantic validation before any DB write (H-11)
-- `google-genai` SDK (not deprecated `google-generativeai`) (H-18)
-- `Pillow` MAX_IMAGE_PIXELS limit (25M pixels for fiscal documents)
-- Extractor interface for dependency injection (enables testing without live Gemini calls)
+`05.2-pdf-processor.md` §05.2.6 documents this gap explicitly. The current implementation returns raw column names from the PDF header. Canonical field mapping and value normalization (CFOP, quantities, BRL values) must be added before table data is written to `extracted_data`.
 
 ---
 
