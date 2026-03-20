@@ -63,7 +63,19 @@ Brazilian fiscal document domain context for developers without prior knowledge.
 - `05-invoice-processors/05.2-pdf-processor.md` — dual-library approach, confidence threshold, cell extraction, table normalization gap
 - `05-invoice-processors/05.3-image-processor.md` — Pillow preprocessing, Gemini structured output, response validation, extractor interface
 
-### Remaining gap: PDF table normalization
+### Remaining gap: PDF table column normalization
+
+`PdfLineItem` in `invoice-models` defines the canonical column names. The PDF processor must map raw PDF header strings (e.g., `"DESCRIÇÃO DO PRODUTO / SERVIÇO"`) to those canonical keys. This mapping belongs in the PDF processor profile, not in the model.
+
+---
+
+## invoice-models
+
+~~Not documented.~~ **Done** — `00-invoice-models/00.1-specification.md`
+
+---
+
+## Remaining gap: PDF table normalization
 
 `05.2-pdf-processor.md` §05.2.6 documents this gap explicitly. The current implementation returns raw column names from the PDF header. Canonical field mapping and value normalization (CFOP, quantities, BRL values) must be added before table data is written to `extracted_data`.
 
