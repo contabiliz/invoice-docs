@@ -81,6 +81,16 @@ Brazilian fiscal document domain context for developers without prior knowledge.
 
 ---
 
+## Phase 2
+
+### `05-database/05.2-analytics-schema.md` ✅ Done
+Analytics schema for "who bought what" queries.
+- `entidades`, `invoices`, `invoice_items` tables
+- Background promotion job from `documents.extracted_data`
+- RLS policies, index strategy, LGPD cascade behaviour
+
+---
+
 ## Deferred Decisions
 
 ### M-05 — Frontend status update mechanism
